@@ -1,8 +1,23 @@
 # ai-agent-skills
 
-A curated collection of skill packs for AI coding assistants. Each skill is a self-contained folder of structured knowledge — architectural rules, ready-to-use code examples, diagnostic workflows, and domain-specific documentation — designed to make any AI model significantly more accurate and useful when working in a specific technology stack.
+> **A curated collection of skill packs for AI coding assistants. Each skill is a self-contained folder of structured knowledge — architectural rules, ready-to-use code examples, diagnostic workflows, and domain-specific documentation — designed to make any AI model significantly more accurate and useful when working in a specific technology stack.**
 
 Skills work with **any AI assistant** that can read files from your project. You don't need any particular tool installed to benefit from them.
+
+## Compatible AI Tools
+
+Skills are automatically detected in the standard directories used by popular AI tools:
+
+| AI Tool | Skills Directory | Auto-detected |
+|---------|-----------------|---------------|
+| **[Antigravity](https://github.com/doITmagic/rag-code-mcp)** (rag-code-mcp) | `.agent/skills/` | ✅ |
+| **[Cursor](https://cursor.com)** | `.cursor/skills/` | ✅ |
+| **[Claude](https://claude.ai)** (Anthropic) | `.claude/skills/` | ✅ |
+| **[Windsurf](https://codeium.com/windsurf)** (Codeium) | `.windsurf/skills/` | ✅ |
+| **[GitHub Copilot](https://github.com/features/copilot)** / VS Code | `.agents/skills/` | ✅ |
+| **[OpenCode](https://opencode.ai)** | `.agent/skills/` | ✅ |
+
+Drop a skill folder into any of these directories and your AI assistant will find it automatically on the next session.
 
 ---
 
