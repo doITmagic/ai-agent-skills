@@ -1,0 +1,21 @@
+{
+    "version": "1.0.0",
+    "registry": "https://raw.githubusercontent.com/doITmagic/ai-agent-skills/main/registry.json",
+    "skills": [
+        {
+            "id": "oxygen-builder",
+            "name": "oxygen-builder",
+            "description": "Comprehensive technical architecture, API reference, and development guide for WordPress Oxygen Builder. Contains concrete code snippets for OxyEl, Conditions API, dynamic data routing, WooCommerce integration, and CSS architecture best practices.",
+            "version": "1.0.0",
+            "author": "razvan-sima",
+            "tags": [
+                "wordpress",
+                "oxygen",
+                "page-builder",
+                "php",
+                "woocommerce"
+            ],
+            "path": "skills/oxygen-builder"
+        }
+    ]
+}
