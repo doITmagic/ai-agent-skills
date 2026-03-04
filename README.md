@@ -1,76 +1,102 @@
-# 🧠 doITmagic / ai-agent-skills
+# ai-agent-skills
 
-> **A community registry of AI agent skill packs for [rag-code-mcp](https://github.com/doITmagic/rag-code-mcp).**
+A curated collection of skill packs for AI coding assistants. Each skill is a self-contained folder of structured knowledge — architectural rules, ready-to-use code examples, diagnostic workflows, and domain-specific documentation — designed to make any AI model significantly more accurate and useful when working in a specific technology stack.
 
-Each skill transforms an AI agent into a domain expert — providing structured rules, code examples, executable scripts, diagnostic workflows and a localized knowledge base, all packaged as a portable folder.
-
----
-
-## 📦 Available Skills
-
-| ID | Description | Tags |
-|----|-------------|------|
-| [`oxygen-builder`](skills/oxygen-builder/) | Advanced Oxygen Builder development guide: OxyEl API, Conditions API, Dynamic Data, WooCommerce integration, CSS patterns. | `wordpress` `oxygen` `php` |
+Skills work with **any AI assistant** that can read files from your project. You don't need any particular tool installed to benefit from them.
 
 ---
 
-## 🚀 How to Install a Skill
+## The Problem Skills Solve
 
-### Option 1: Via rag-code-mcp MCP Tool (Recommended)
-When `rag-code-mcp` adds remote registry support, use:
-```json
-{ "tool": "rag_install_skill", "skill_id": "oxygen-builder" }
+AI models are general-purpose. They know a little about everything, which means they also hallucinate a lot about specific, niche tools. When you ask a model to help you build something in Oxygen Builder, WooCommerce, or any other specialized platform, you'll often get plausible-sounding answers that are simply wrong — wrong API methods, wrong conventions, wrong assumptions about how the tool works.
+
+Skills fix this by giving the AI a curated reference point before it starts working. Instead of guessing based on pre-training data, the model reads a concise, verified knowledge base and produces answers grounded in actual reality for that tool.
+
+The result: fewer hallucinations, less back-and-forth, faster development.
+
+---
+
+## How Skills Work
+
+A skill is just a folder. Drop it into your project under `.agent/skills/<skill-name>/`, and any AI assistant with access to your file system can read it.
+
+The key file is `SKILL.md` — a structured markdown document that tells the AI:
+- How the technology works architecturally
+- What conventions and patterns to follow
+- What common mistakes to avoid
+- Where to find deeper examples and code snippets
+
+Additional subfolders extend the skill further:
+
+```
+.agent/skills/
+└── oxygen-builder/
+    ├── SKILL.md         # Core rules and architecture guide
+    ├── examples/        # Copy-paste code snippets
+    ├── workflows/       # Step-by-step checklists for common tasks
+    ├── scripts/         # Utility scripts the AI can run on your behalf
+    └── topics/          # Deep knowledge base (indexed documentation)
 ```
 
-### Option 2: Manual Install
-Clone or download the desired skill folder directly into your project's `.agent/skills/` directory:
+---
+
+## Available Skills
+
+| Skill | Description |
+|-------|-------------|
+| [oxygen-builder](skills/oxygen-builder/) | Oxygen Builder for WordPress — OxyEl API, Conditions API, Dynamic Data, WooCommerce integration, CSS architecture, templating engine internals |
+
+---
+
+## Using a Skill
+
+### Without any tooling (manual)
+
+Download or clone the skill folder you need and place it in your project:
 
 ```bash
-# Clone only the specific skill you need (sparse checkout)
+# Sparse-clone only the skill you need
 git clone --filter=blob:none --sparse https://github.com/doITmagic/ai-agent-skills.git
 cd ai-agent-skills
 git sparse-checkout set skills/oxygen-builder
 
-# Copy to your project
+# Place it in your project
 cp -r skills/oxygen-builder /path/to/your-project/.agent/skills/oxygen-builder
 ```
 
+From this point, any AI assistant working in your project can read the skill files when relevant. Tell it to look at `.agent/skills/oxygen-builder/SKILL.md` at the start of a session, or simply mention the technology — most context-aware assistants will find it automatically.
+
+### With rag-code-mcp
+
+[rag-code-mcp](https://github.com/doITmagic/rag-code-mcp) handles the entire installation automatically. No directory creation, no cloning, no copying. You tell your AI assistant which skill you need, and it takes care of the rest — downloading the skill files, placing them in the right location inside your project, and indexing the knowledge base into a local vector database.
+
+```json
+{ "tool": "rag_install_skill", "skill_id": "oxygen-builder" }
+```
+
+That single instruction is all it takes. From that point forward, the AI works with indexed, on-demand retrieval. Instead of loading the entire skill into the context window at once, it fetches only the sections relevant to the current task. The practical effect is meaningful: fewer tokens consumed per interaction, faster responses, and a model that stays focused rather than getting buried in irrelevant context.
+
+Whether you use rag-code-mcp or install manually, the skill itself is identical. rag-code-mcp is an optimization layer, not a requirement.
+
 ---
 
-## 📁 Skill Structure Convention
+## Contributing
 
-Each skill **must** follow this folder structure to be compatible with `rag-code-mcp`:
+If you've built something with a specialized tool and want to share what you've learned — the real architectural rules, the real gotchas, the patterns that actually work — consider turning it into a skill.
 
-```
-skills/
-└── {skill-id}/
-    ├── SKILL.md          # REQUIRED: Main knowledge file with YAML frontmatter (name, description)
-    ├── examples/         # OPTIONAL: Ready-to-use code snippets
-    ├── workflows/        # OPTIONAL: Step-by-step procedural guides for AI agents
-    ├── scripts/          # OPTIONAL: Bash/Python utilities the AI can execute
-    └── topics/           # OPTIONAL: Deep-dive knowledge base (Markdown files for RAG indexing)
-```
+The format is simple. The `SKILL.md` frontmatter requires only a `name` and `description`:
 
-### SKILL.md Required Frontmatter
 ```yaml
 ---
-name: skill-id
-description: Short description of what this skill teaches the AI.
+name: your-skill-name
+description: One sentence describing what this skill covers.
 ---
 ```
 
----
-
-## 🤝 Contributing
-
-1. Fork this repository.
-2. Create your skill folder under `skills/{your-skill-id}/`.
-3. Ensure `SKILL.md` has the required YAML frontmatter.
-4. Add your skill entry to `registry.json`.
-5. Open a Pull Request!
+Add your skill under `skills/your-skill-name/`, update `registry.json`, and open a pull request.
 
 ---
 
-## 📄 License
+## License
 
 MIT © [doITmagic](https://github.com/doITmagic)
