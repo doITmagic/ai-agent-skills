@@ -16,6 +16,98 @@
                 "woocommerce"
             ],
             "path": "skills/oxygen-builder"
+        },
+        {
+            "id": "debugging-guide",
+            "name": "debugging-guide",
+            "description": "How to use ragcode tools for fast root-cause analysis and debugging",
+            "version": "1.0.0",
+            "author": "doITmagic",
+            "tags": [
+                "debugging",
+                "ragcode",
+                "workflow"
+            ],
+            "path": "skills/debugging-guide"
+        },
+        {
+            "id": "go-best-practices",
+            "name": "go-best-practices",
+            "description": "Go development patterns, project structure, and idiomatic practices",
+            "version": "1.0.0",
+            "author": "doITmagic",
+            "tags": [
+                "go",
+                "golang",
+                "best-practices"
+            ],
+            "path": "skills/go-best-practices"
+        },
+        {
+            "id": "php-laravel",
+            "name": "php-laravel",
+            "description": "PHP and Laravel specific patterns, Service Providers, and Eloquent practices",
+            "version": "1.0.0",
+            "author": "doITmagic",
+            "tags": [
+                "php",
+                "laravel",
+                "eloquent"
+            ],
+            "path": "skills/php-laravel"
+        },
+        {
+            "id": "python-best-practices",
+            "name": "python-best-practices",
+            "description": "Python patterns, type hinting, and project standards",
+            "version": "1.0.0",
+            "author": "doITmagic",
+            "tags": [
+                "python",
+                "best-practices",
+                "type-hints"
+            ],
+            "path": "skills/python-best-practices"
+        },
+        {
+            "id": "ragcode-priority",
+            "name": "ragcode-priority",
+            "description": "Prioritize ragcode MCP tools for all code searches in this project",
+            "version": "1.0.0",
+            "author": "doITmagic",
+            "tags": [
+                "ragcode",
+                "mcp",
+                "search"
+            ],
+            "path": "skills/ragcode-priority"
+        },
+        {
+            "id": "ragcode-sse",
+            "name": "ragcode-sse",
+            "description": "Teach agents how to call RagCode MCP over the SSE transport without extra MCP config",
+            "version": "1.0.0",
+            "author": "doITmagic",
+            "tags": [
+                "ragcode",
+                "sse",
+                "mcp",
+                "transport"
+            ],
+            "path": "skills/ragcode-sse"
+        },
+        {
+            "id": "ragcode-update",
+            "name": "ragcode-update",
+            "description": "Guide for managing ragcode updates, health checks, and AI skills",
+            "version": "1.0.0",
+            "author": "doITmagic",
+            "tags": [
+                "ragcode",
+                "updates",
+                "maintenance"
+            ],
+            "path": "skills/ragcode-update"
         }
     ]
 }

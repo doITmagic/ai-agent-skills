@@ -42,9 +42,16 @@ Additional subfolders extend the skill further:
 
 ## Available Skills
 
-| Skill | Description |
-|-------|-------------|
-| [oxygen-builder](skills/oxygen-builder/) | Oxygen Builder for WordPress — OxyEl API, Conditions API, Dynamic Data, WooCommerce integration, CSS architecture, templating engine internals |
+| Skill | Description | Tags |
+|-------|-------------|------|
+| [oxygen-builder](skills/oxygen-builder/) | Oxygen Builder for WordPress — OxyEl API, Conditions API, Dynamic Data, WooCommerce integration, CSS architecture, templating engine internals | `wordpress` `oxygen` `php` |
+| [go-best-practices](skills/go-best-practices/) | Go development patterns, project structure, idiomatic practices, concurrency and testing conventions | `go` `golang` |
+| [php-laravel](skills/php-laravel/) | PHP and Laravel patterns — Service Providers, Eloquent, Controllers, Feature & Unit testing | `php` `laravel` |
+| [python-best-practices](skills/python-best-practices/) | Python clean code patterns, type hinting, async usage, pytest, and dependency management | `python` |
+| [debugging-guide](skills/debugging-guide/) | Workflow for fast root-cause analysis using ragcode tools — locate, contextualize, analyze | `debugging` `workflow` |
+| [ragcode-priority](skills/ragcode-priority/) | Instructs the AI to prioritize ragcode MCP tools over generic search for all code lookups | `ragcode` `mcp` |
+| [ragcode-sse](skills/ragcode-sse/) | How to call RagCode MCP over SSE transport without additional MCP configuration | `ragcode` `sse` |
+| [ragcode-update](skills/ragcode-update/) | Guide for managing ragcode updates, health checks, and skill management | `ragcode` `maintenance` |
 
 ---
 
