@@ -5,6 +5,13 @@ description: Use when starting any task, encountering bugs, or discussing plans.
 
 # Using Trello Orchestrator
 
+## Prerequisites
+
+This skill suite requires the **Trello MCP Server** to be installed and available to the agent.
+- **MCP Server Repository:** [doITmagic/trello-mcp-complete](https://github.com/doITmagic/trello-mcp-complete)
+
+Please ensure the MCP server is configured in your agent's settings before attempting to run any Trello workflows.
+
 ## Overview
 
 This is the master router for the Trello MCP workflow. It dictates WHEN to invoke specific Trello skills. Do not attempt to manage Trello directly from this skill; instead, delegate to the sub-skills based on the user's current context.
