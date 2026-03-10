@@ -67,6 +67,12 @@ Additional subfolders extend the skill further:
 | [ragcode-priority](skills/ragcode-priority/) | Instructs the AI to prioritize ragcode MCP tools over generic search for all code lookups | `ragcode` `mcp` |
 | [ragcode-sse](skills/ragcode-sse/) | How to call RagCode MCP over SSE transport without additional MCP configuration | `ragcode` `sse` |
 | [ragcode-update](skills/ragcode-update/) | Guide for managing ragcode updates, health checks, and skill management | `ragcode` `maintenance` |
+| **— Trello Integration —** | | |
+| [using-trello](skills/using-trello/) | Master orchestrator for the Trello MCP workflow — routes bug reports, task creation, and status updates to the correct sub-skill | `trello` `mcp` `workflow` |
+| [trello-board-initializer](skills/trello-board-initializer/) | Identifies the correct Trello board for the project and validates that the required lists (Bugs, To Do, Doing, Done) exist | `trello` `mcp` `setup` |
+| [trello-bug-reporter](skills/trello-bug-reporter/) | Proactively creates a Trello bug card when an error is thrown, a test fails, or the user reports anomalous behavior | `trello` `mcp` `debugging` |
+| [trello-task-creator](skills/trello-task-creator/) | Extracts actionable tasks from plans or feature discussions and proposes creating Trello cards in the To Do list | `trello` `mcp` `planning` |
+| [trello-status-updater](skills/trello-status-updater/) | Moves Trello cards to Done when a feature is implemented, a PR is created, or a bug is confirmed fixed | `trello` `mcp` `workflow` |
 
 ---
 

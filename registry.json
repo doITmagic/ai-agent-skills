@@ -108,6 +108,76 @@
                 "maintenance"
             ],
             "path": "skills/ragcode-update"
+        },
+        {
+            "id": "using-trello",
+            "name": "using-trello",
+            "description": "Master orchestrator for the Trello MCP workflow. Routes bug reports, task creation, and status updates to the correct sub-skill based on conversation context.",
+            "version": "1.0.0",
+            "author": "doITmagic",
+            "tags": [
+                "trello",
+                "mcp",
+                "workflow",
+                "orchestrator"
+            ],
+            "path": "skills/using-trello"
+        },
+        {
+            "id": "trello-board-initializer",
+            "name": "trello-board-initializer",
+            "description": "Identifies the correct Trello board for the project and validates that the required lists (Bugs, To Do, Doing, Done) exist before any other Trello skill runs.",
+            "version": "1.0.0",
+            "author": "doITmagic",
+            "tags": [
+                "trello",
+                "mcp",
+                "setup",
+                "workflow"
+            ],
+            "path": "skills/trello-board-initializer"
+        },
+        {
+            "id": "trello-bug-reporter",
+            "name": "trello-bug-reporter",
+            "description": "Proactively creates a Trello bug card when an error is thrown, a test fails, or the user reports anomalous behavior. Track first, fix second.",
+            "version": "1.0.0",
+            "author": "doITmagic",
+            "tags": [
+                "trello",
+                "mcp",
+                "debugging",
+                "bugs"
+            ],
+            "path": "skills/trello-bug-reporter"
+        },
+        {
+            "id": "trello-task-creator",
+            "name": "trello-task-creator",
+            "description": "Extracts actionable tasks from feature discussions or implementation plans and proposes creating Trello cards in the To Do list.",
+            "version": "1.0.0",
+            "author": "doITmagic",
+            "tags": [
+                "trello",
+                "mcp",
+                "planning",
+                "tasks"
+            ],
+            "path": "skills/trello-task-creator"
+        },
+        {
+            "id": "trello-status-updater",
+            "name": "trello-status-updater",
+            "description": "Moves the associated Trello card to Done when a feature is implemented, a PR is created, or a bug is confirmed fixed after verification.",
+            "version": "1.0.0",
+            "author": "doITmagic",
+            "tags": [
+                "trello",
+                "mcp",
+                "workflow",
+                "completion"
+            ],
+            "path": "skills/trello-status-updater"
         }
     ]
 }
