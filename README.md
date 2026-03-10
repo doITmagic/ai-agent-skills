@@ -129,6 +129,18 @@ Add your skill under `skills/your-skill-name/`, update `registry.json`, and open
 
 ---
 
+## Explore Our Other Projects
+
+If you find these skills useful, you might be interested in our other open-source tools designed to supercharge AI coding assistants:
+
+- **[rag-code-mcp](https://github.com/doITmagic/rag-code-mcp)**: An advanced RAG-based Model Context Protocol server that gives AI assistants highly accurate, semantic code search and context reading capabilities.
+- **[trello-mcp-complete](https://github.com/doITmagic/trello-mcp-complete)**: A Model Context Protocol server for Trello that allows AI agents to seamlessly orchestrate tasks and bug tracking.
+- **[go-snippets](https://github.com/doITmagic/go-snippets)**: A curated collection of Go snippets, tools, and best practices to accelerate development.
+
+Discover more of our work on our **[GitHub Profile](https://github.com/doITmagic)**.
+
+---
+
 ## License
 
 MIT © [doITmagic](https://github.com/doITmagic)
