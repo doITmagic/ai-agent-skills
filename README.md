@@ -74,6 +74,10 @@ Additional subfolders extend the skill further:
 | [trello-task-creator](skills/trello-task-creator/) | Extracts actionable tasks from plans or feature discussions and proposes creating Trello cards in the To Do list | `trello` `mcp` `planning` |
 | [trello-status-updater](skills/trello-status-updater/) | Moves Trello cards to Done when a feature is implemented, a PR is created, or a bug is confirmed fixed | `trello` `mcp` `workflow` |
 
+> **Note on Trello Skills:** To *actually execute* Trello actions, these specific skills **require** the [trello-mcp-complete](https://github.com/doITmagic/trello-mcp-complete) server.
+>
+> For *all other skills* in this repository, they are **100% standalone and framework-agnostic**. You can always manually copy *any* skill folder directly into your project to use it. The [rag-code-mcp](https://github.com/doITmagic/rag-code-mcp) tool is merely an *optional helper* for installation, designed to simplify the process if you choose to use it, but it's not a requirement for skill functionality.
+
 ---
 
 ## Using a Skill
