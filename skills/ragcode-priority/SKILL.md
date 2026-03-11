@@ -1,137 +1,141 @@
 ---
 name: ragcode-priority
-description: Prioritize ragcode MCP tools for all code searches in this project
+description: Use when searching code in this project - mandates ragcode MCP tools over grep or manual navigation
 ---
 
 # 🎯 Skill: Ragcode MCP Priority Usage
 
-This skill defines **MANDATORY** rules for searching code in the **rag-code-mcp** project.
+Reguli **OBLIGATORII** pentru căutarea codului în proiectul **rag-code-mcp**.
 
 ---
 
-## ✅ MANDATORY RULES
+## ✅ Tool-uri disponibile și ordinea de utilizare
 
-### 1. Search Hierarchy
+| Prioritate | Tool MCP (nume exact) | Când se folosește |
+|------------|----------------------|-------------------|
+| 🥇 **1** | `mcp_ragcode_rag_search` | Explorare semantică, concepte, cod necunoscut |
+| 🥈 **2** | `mcp_ragcode_rag_find_usages` | Cine/unde folosește un simbol (funcție, tip, struct) |
+| 🥉 **3** | `mcp_ragcode_rag_list_package_exports` | Ce exportă un pachet |
+| 4️⃣ | `mcp_ragcode_rag_call_hierarchy` | Lanțul de apeluri (caller/callee) al unei funcții |
+| 5️⃣ | `mcp_ragcode_rag_read_file_context` | Context precis dintr-un fișier la o linie dată |
 
-When searching code, ALWAYS follow this order:
-
-| Priority | Tool | When to Use |
-|----------|------|-------------|
-| 🥇 **First** | `mcp_ragcode_search_code` | Exploration, understanding concepts, unfamiliar code |
-| 🥈 **Second** | `mcp_ragcode_hybrid_search` | Exact match: function names, errors, string literals |
-| 🥉 **Third** | `mcp_ragcode_get_function_details` | Complete code of a known function |
-| 4️⃣ | `mcp_ragcode_find_type_definition` | Complete struct/interface definition |
-| 5️⃣ | `mcp_ragcode_find_implementations` | Where a function is called/implemented |
-| 6️⃣ | `mcp_ragcode_list_package_exports` | What a package exports |
-
-### 2. "Search First" Rule
-
-**ALWAYS** start with a ragcode search before assuming code structure!
-
-```
-❌ WRONG: "I know it's in internal/ragcode, I'll open the file directly"
-✅ CORRECT: search_code → find exact location → open file
-```
-
-### 3. Standard Workflow
-
-```
-Step 1: mcp_ragcode_search_code (understand context)
-           ↓
-Step 2: mcp_ragcode_get_function_details OR find_type_definition (details)
-           ↓
-Step 3: view_file (only for specific lines if needed)
-```
+> **IMPORTANT:** `mcp_ragcode_rag_search` este singurul tool care face atât căutare **semantică** cât și **exactă** (mode: `all`, `strict_code`, `strict_docs`). Nu există `hybrid_search` sau `search_code` separate — acestea nu există.
 
 ---
 
-## ⛔ FORBIDDEN
+## 🔧 Parametri recomandați
 
-### Do NOT use these tools for code search:
-
-| Tool | Why Forbidden | Exception |
-|------|---------------|-----------|
-| `grep_search` | No semantic context | ONLY for JavaScript/TypeScript (not indexed yet) |
-| `find_by_name` | For files, not content | OK for finding files, not code |
-| `view_file` randomly | Waste of time without context | ONLY after ragcode search |
-
-### Forbidden behaviors:
-
-1. ❌ **DO NOT assume** code structure without searching
-2. ❌ **DO NOT make multiple grep searches** when one ragcode search suffices
-3. ❌ **DO NOT navigate manually** through directories to find code
-4. ❌ **DO NOT open random files** hoping to find what you need
-
----
-
-## 🌐 Language Support
-
-### ✅ Full support (use ONLY ragcode):
-- **Go** - complete analyzer, all tools work
-- **Python** - complete analyzer
-- **PHP/Laravel** - complete analyzer with Laravel support
-- **HTML** - basic analyzer
-
-### ⚠️ Limited support (fallback allowed):
-- **JavaScript/TypeScript** - indexing in development
-  - Try `search_code` FIRST
-  - If not found, use `grep_search` as backup
-
----
-
-## 🔧 Recommended Parameters
-
-### search_code
+### `mcp_ragcode_rag_search`
+```json
+{
+  "query": "<descriere semantică sau termen exact>",
+  "file_path": "/home/razvan/go/src/github.com/doITmagic/rag-code-mcp",
+  "limit": 5,
+  "mode": "strict_code",
+  "include_full_content": true
+}
 ```
-query: <semantic description of what you're looking for>
-file_path: /home/razvan/go/src/github.com/doITmagic/rag-code-mcp  # optional, for context
-limit: 5  # sufficient for most searches
+- `mode: "strict_code"` — doar cod sursă, ignoră docs
+- `mode: "strict_docs"` — doar documentație/README
+- `mode: "all"` (default) — tot
+
+### `mcp_ragcode_rag_find_usages`
+```json
+{
+  "symbol_name": "IndexWorkspace",
+  "file_path": "/home/razvan/go/src/github.com/doITmagic/rag-code-mcp/internal/..."
+}
 ```
 
-### hybrid_search
+### `mcp_ragcode_rag_call_hierarchy`
+```json
+{
+  "symbol_name": "IndexWorkspace",
+  "direction": "incoming",
+  "depth": 2,
+  "file_path": "/home/razvan/go/src/github.com/doITmagic/rag-code-mcp/..."
+}
 ```
-query: <exact term to search>
-limit: 5
+- `direction: "incoming"` — cine apelează funcția
+- `direction: "outgoing"` — ce apelează funcția
+
+### `mcp_ragcode_rag_list_package_exports`
+```json
+{
+  "package": "codetypes",
+  "symbol_type": "type",
+  "file_path": "/home/razvan/go/src/github.com/doITmagic/rag-code-mcp/..."
+}
 ```
 
-### get_function_details
-```
-function_name: <exact function name>
-package: <optional package for disambiguation>
+### `mcp_ragcode_rag_read_file_context`
+```json
+{
+  "file_path": "/home/razvan/.../engine.go",
+  "line_number": 42,
+  "context_lines": 10
+}
 ```
 
 ---
 
-## 📖 Why ragcode?
+## ⛔ INTERZIS
 
-| Aspect | grep_search | ragcode |
-|--------|-------------|---------|
-| Understands context | ❌ | ✅ |
-| Semantic search | ❌ | ✅ |
-| Finds similar functions | ❌ | ✅ |
-| Returns complete code | ❌ | ✅ |
-| Multi-language support | Limited | ✅ |
+| Tool interzis | De ce | Excepție |
+|---------------|-------|----------|
+| `grep_search` | Fără context semantic | doar pentru fișiere ne-indexate |
+| `find_by_name` | Caută fișiere, nu cod | OK pentru a localiza fișiere |
+| `view_file` fără context | Pierdere de timp | NUMAI după un search ragcode |
 
-**Concrete example:**
-- Search "user authentication" with grep: finds only literal string "authentication"
-- Search with ragcode: finds login functions, token validation, auth middleware
+### Comportamente interzise:
+1. ❌ **NU presupune** structura codului fără să cauți
+2. ❌ **NU folosi grep** când ragcode poate răspunde
+3. ❌ **NU naviga manual** prin directoare
+4. ❌ **NU folosi tool-uri inexistente** (`mcp_ragcode_search_code`, `mcp_ragcode_hybrid_search`, `mcp_ragcode_get_function_details`, `mcp_ragcode_find_type_definition`, `mcp_ragcode_find_implementations`, `mcp_ragcode_get_code_context`) — **acestea nu există**
+
+---
+
+## 📋 Workflow standard
+
+```
+rag_search (înțelegere concept)
+    ↓
+rag_find_usages (impact analysis)
+    ↓
+rag_read_file_context (detalii precise)
+    ↓
+view_file (opțional, linii specifice)
+```
+
+---
+
+## 🌐 Suport limbaje
+
+### ✅ Complet indexate (folosește NUMAI ragcode):
+- **Go** — parser complet, toate tool-urile funcționează
+- **Python** — parser complet
+- **PHP/Laravel** — parser complet cu suport Laravel
+- **JavaScript/TypeScript** — indexare completă cu Tree-sitter
+
+### ⚠️ Fallback permis:
+- Fișiere generate sau ne-indexate explicit → `grep_search` ca backup
 
 ---
 
 ## ⚡ Quick Reference
 
 ```
-🔍 Exploration         → search_code
-🎯 Exact match         → hybrid_search  
-📝 Function code       → get_function_details
-🏗️ Type definition     → find_type_definition
-🔗 Usages              → find_implementations
-📦 Package contents    → list_package_exports
-📄 Specific context    → get_code_context (with file + lines)
+🔍 Explorare semantică     → rag_search (mode: all)
+🎯 Exact / cod pur         → rag_search (mode: strict_code)
+📝 Documentație            → rag_search (mode: strict_docs)
+🔗 Unde e folosit          → rag_find_usages
+📞 Cine/ce apelează        → rag_call_hierarchy
+📦 Exporturi pachet        → rag_list_package_exports
+📄 Context linie exactă    → rag_read_file_context
 ```
 
 ---
 
-## 📚 Examples
+## 📚 Exemple
 
-See [examples/search_patterns.md](examples/search_patterns.md) for project-specific examples.
+Vezi [examples/search_patterns.md](examples/search_patterns.md) pentru exemple specifice proiectului.

@@ -1,184 +1,213 @@
 # 📚 Ragcode Search Patterns for rag-code-mcp
 
-This file contains practical examples for searching the rag-code-mcp codebase.
+Exemple practice pentru căutarea în codebase-ul rag-code-mcp.
+
+> **ATENȚIE:** Tool-urile corecte sunt `mcp_ragcode_rag_*` — nu există `search_code`, `hybrid_search`, `get_function_details`, `find_type_definition`, `find_implementations` sau `get_code_context`.
 
 ---
 
-## 🔍 Finding Analyzers
+## 🔍 Explorare semantică cu `rag_search`
 
-### Find all language analyzers
-```
-mcp_ragcode_search_code 
-  query: "language analyzer implementation CodeAnalyzer"
-  limit: 10
-```
-
-### Find specific language analyzer
-```
-# Go analyzer
-mcp_ragcode_search_code query: "Go AST parsing analyzer"
-
-# Python analyzer
-mcp_ragcode_search_code query: "Python code analyzer module parsing"
-
-# PHP/Laravel analyzer
-mcp_ragcode_search_code query: "PHP Laravel adapter analyzer"
+### Găsește toți analyzerii de limbaje
+```json
+{
+  "tool": "mcp_ragcode_rag_search",
+  "query": "language analyzer implementation CodeAnalyzer",
+  "mode": "strict_code",
+  "limit": 10,
+  "file_path": "/home/razvan/go/src/github.com/doITmagic/rag-code-mcp"
+}
 ```
 
-### Get analyzer implementation details
-```
-mcp_ragcode_get_function_details 
-  function_name: "NewCodeAnalyzer"
-  package: "golang"
-```
-
----
-
-## 🏗️ Understanding Types
-
-### Find Symbol structure
-```
-mcp_ragcode_find_type_definition type_name: "Symbol"
+### Găsește analyzer-ul Go
+```json
+{
+  "tool": "mcp_ragcode_rag_search",
+  "query": "Go AST parsing analyzer",
+  "mode": "strict_code",
+  "limit": 5
+}
 ```
 
-### Find PathAnalyzer interface
-```
-mcp_ragcode_find_type_definition type_name: "PathAnalyzer"
+### Caută un tip/struct specific
+```json
+{
+  "tool": "mcp_ragcode_rag_search",
+  "query": "Symbol struct definition codetypes",
+  "mode": "strict_code",
+  "include_full_content": true
+}
 ```
 
-### Find all types in a package
-```
-mcp_ragcode_list_package_exports 
-  package: "codetypes"
-  symbol_type: "type"
+### Caută cu termen exact (funcție, eroare, constantă)
+```json
+{
+  "tool": "mcp_ragcode_rag_search",
+  "query": "func IndexWorkspace",
+  "mode": "strict_code",
+  "min_score": 0.7
+}
 ```
 
 ---
 
-## 🔗 Finding Usages
+## 🔗 Găsire utilizări cu `rag_find_usages`
 
-### Where is IndexWorkspace called?
-```
-mcp_ragcode_find_implementations symbol_name: "IndexWorkspace"
-```
-
-### Who implements PathAnalyzer?
-```
-mcp_ragcode_find_implementations symbol_name: "PathAnalyzer"
-```
-
-### Where is Symbol used?
-```
-mcp_ragcode_find_implementations symbol_name: "Symbol"
+### Unde este apelat IndexWorkspace?
+```json
+{
+  "tool": "mcp_ragcode_rag_find_usages",
+  "symbol_name": "IndexWorkspace",
+  "file_path": "/home/razvan/go/src/github.com/doITmagic/rag-code-mcp/pkg/indexer/index_status.go"
+}
 ```
 
----
-
-## 🎯 Exact Matches
-
-### Find specific function by name
-```
-mcp_ragcode_hybrid_search query: "func IndexWorkspace"
-```
-
-### Find error handling
-```
-mcp_ragcode_hybrid_search query: "return nil, fmt.Errorf"
+### Cine implementează interfața PathAnalyzer?
+```json
+{
+  "tool": "mcp_ragcode_rag_find_usages",
+  "symbol_name": "PathAnalyzer",
+  "file_path": "/home/razvan/go/src/github.com/doITmagic/rag-code-mcp/..."
+}
 ```
 
-### Find specific constant or variable
-```
-mcp_ragcode_hybrid_search query: "LanguageGo"
+### Unde este folosit tipul Symbol?
+```json
+{
+  "tool": "mcp_ragcode_rag_find_usages",
+  "symbol_name": "Symbol"
+}
 ```
 
 ---
 
-## 📦 Exploring Packages
+## 📞 Ierarhie de apeluri cu `rag_call_hierarchy`
 
-### What does the ragcode package export?
-```
-mcp_ragcode_list_package_exports package: "ragcode"
-```
-
-### What functions are in workspace package?
-```
-mcp_ragcode_list_package_exports 
-  package: "workspace"
-  symbol_type: "function"
-```
-
-### What types are in codetypes package?
-```
-mcp_ragcode_list_package_exports 
-  package: "codetypes"
-  symbol_type: "type"
+### Cine apelează IndexWorkspace? (incoming)
+```json
+{
+  "tool": "mcp_ragcode_rag_call_hierarchy",
+  "symbol_name": "IndexWorkspace",
+  "direction": "incoming",
+  "depth": 2,
+  "file_path": "/home/razvan/go/src/github.com/doITmagic/rag-code-mcp/pkg/indexer/index_status.go"
+}
 ```
 
----
-
-## 🔄 Common Workflows
-
-### Workflow 1: Understanding a feature
-```
-# Step 1: Semantic search for the concept
-mcp_ragcode_search_code query: "language detection workspace"
-
-# Step 2: Get the main function details
-mcp_ragcode_get_function_details function_name: "DetectLanguages"
-
-# Step 3: Find where it's used
-mcp_ragcode_find_implementations symbol_name: "DetectLanguages"
-```
-
-### Workflow 2: Debugging an issue
-```
-# Step 1: Search for related code
-mcp_ragcode_search_code query: "indexing error handling workspace"
-
-# Step 2: Find the exact error message
-mcp_ragcode_hybrid_search query: "workspace not indexed"
-
-# Step 3: Get context around the error
-mcp_ragcode_get_code_context 
-  file_path: "<file from step 2>"
-  start_line: <line - 5>
-  end_line: <line + 10>
-```
-
-### Workflow 3: Adding a new feature
-```
-# Step 1: Find similar implementations
-mcp_ragcode_search_code query: "analyzer implementation for language"
-
-# Step 2: Understand the interface
-mcp_ragcode_find_type_definition type_name: "PathAnalyzer"
-
-# Step 3: See existing implementations
-mcp_ragcode_find_implementations symbol_name: "PathAnalyzer"
+### Ce apelează funcția AnalyzePackage? (outgoing)
+```json
+{
+  "tool": "mcp_ragcode_rag_call_hierarchy",
+  "symbol_name": "AnalyzePackage",
+  "direction": "outgoing",
+  "depth": 3
+}
 ```
 
 ---
 
-## ⚠️ JavaScript/TypeScript Fallback
+## 📦 Explorare pachete cu `rag_list_package_exports`
 
-When searching JS/TS code (not yet fully indexed):
-
+### Ce exportă pachetul ragcode?
+```json
+{
+  "tool": "mcp_ragcode_rag_list_package_exports",
+  "package": "ragcode",
+  "file_path": "/home/razvan/go/src/github.com/doITmagic/rag-code-mcp/..."
+}
 ```
-# Try ragcode first
-mcp_ragcode_search_code query: "javascript parser"
 
-# If no results, fallback to grep
-grep_search 
-  SearchPath: "/home/razvan/go/src/github.com/doITmagic/rag-code-mcp"
-  Query: "javascript"
-  Includes: ["*.go"]
+### Ce tipuri are pachetul codetypes?
+```json
+{
+  "tool": "mcp_ragcode_rag_list_package_exports",
+  "package": "codetypes",
+  "symbol_type": "type"
+}
+```
+
+### Ce funcții are pachetul workspace?
+```json
+{
+  "tool": "mcp_ragcode_rag_list_package_exports",
+  "package": "workspace",
+  "symbol_type": "function"
+}
 ```
 
 ---
 
-## 📝 Tips
+## 📄 Context precis cu `rag_read_file_context`
 
-1. **Be semantic**: Use descriptive queries like "authentication middleware" not just "auth"
-2. **Start broad**: Begin with `search_code`, narrow down with specific tools
-3. **Use packages**: When function names are ambiguous, specify the package
-4. **Check implementations**: Always use `find_implementations` to understand impact before refactoring
+### Citește codul în jurul unei linii
+```json
+{
+  "tool": "mcp_ragcode_rag_read_file_context",
+  "file_path": "/home/razvan/go/src/github.com/doITmagic/rag-code-mcp/internal/service/engine/engine.go",
+  "line_number": 42,
+  "context_lines": 15
+}
+```
+
+### Citește un range specific
+```json
+{
+  "tool": "mcp_ragcode_rag_read_file_context",
+  "file_path": "/home/razvan/go/src/github.com/doITmagic/rag-code-mcp/pkg/parser/python/extract.go",
+  "start_line": 100,
+  "end_line": 150
+}
+```
+
+---
+
+## 🔄 Workflow-uri comune
+
+### Workflow 1: Înțelegerea unei funcționalități
+```
+# Pas 1: Caută semantic conceptul
+rag_search → query: "language detection workspace indexing"
+
+# Pas 2: Găsește unde e utilizată funcția principală
+rag_find_usages → symbol_name: "DetectLanguages"
+
+# Pas 3: Înțelege ierarhia de apeluri
+rag_call_hierarchy → symbol_name: "DetectLanguages", direction: "incoming"
+
+# Pas 4: Citește codul precis
+rag_read_file_context → file_path: <fișier din pas 1>, line_number: <linia>
+```
+
+### Workflow 2: Debugging
+```
+# Pas 1: Caută codul relevant
+rag_search → query: "indexing error handling workspace", mode: "strict_code"
+
+# Pas 2: Găsește mesajul exact de eroare
+rag_search → query: "workspace not indexed", min_score: 0.8
+
+# Pas 3: Citește contextul din jurulfișierului
+rag_read_file_context → file_path: <din pas 2>, line_number: <linia>, context_lines: 20
+```
+
+### Workflow 3: Adăugarea unei funcționalități noi
+```
+# Pas 1: Găsește implementări similare
+rag_search → query: "analyzer implementation for language"
+
+# Pas 2: Înțelege interfața
+rag_search → query: "PathAnalyzer interface", mode: "strict_code", include_full_content: true
+
+# Pas 3: Găsește implementările existente
+rag_find_usages → symbol_name: "PathAnalyzer"
+```
+
+---
+
+## 📝 Sfaturi
+
+1. **Fii semantic**: `"authentication middleware"` nu `"auth"`
+2. **Începe larg**: `rag_search` mai întâi, narrowing cu celelalte tool-uri
+3. **Specifică file_path**: ajută MCP-ul să detecteze workspace-ul mai rapid
+4. **Folosește `include_full_content: true`**: când vrei codul complet al funcțiilor găsite
+5. **`min_score`**: setează `0.7+` pentru potriviri exacte, lasă implicit pentru explorare
