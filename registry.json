@@ -110,6 +110,35 @@
             "path": "skills/ragcode-update"
         },
         {
+            "id": "spec-driven-development",
+            "name": "spec-driven-development",
+            "description": "Three-phase requirements, design, and task planning workflow for systematic feature development",
+            "version": "1.0.0",
+            "author": "Kiro Team",
+            "tags": [
+                "methodology",
+                "requirements",
+                "design",
+                "planning"
+            ],
+            "path": "skills/spec-driven-development"
+        },
+        {
+            "id": "hermes-tweet",
+            "name": "hermes-tweet",
+            "description": "Hermes Tweet workflows for X/Twitter research, monitoring, audits, and approval-gated account actions",
+            "version": "1.0.0",
+            "author": "Xquik",
+            "tags": [
+                "hermes",
+                "twitter",
+                "x",
+                "social-media",
+                "mcp"
+            ],
+            "path": "skills/hermes-tweet"
+        },
+        {
             "id": "using-trello",
             "name": "using-trello",
             "description": "Master orchestrator for the Trello MCP workflow. Routes bug reports, task creation, and status updates to the correct sub-skill based on conversation context.",
